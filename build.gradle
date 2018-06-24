@@ -2,7 +2,6 @@ allprojects {
     version = '0.0.1'
 
     ext {
-        appName = "mygdxgame"
         gdxVersion = '1.9.8'
     }
 

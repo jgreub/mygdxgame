@@ -3,8 +3,6 @@ plugins {
 }
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
-sourceSets.main.java.srcDirs = ["src/"]
 
 dependencies {
     compile project(":core")
@@ -16,28 +14,9 @@ dependencies {
 project.ext.mainClassName = "com.jgreubel.mygdxgame.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")
 
-task run(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-}
-
-task debug(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-    debug = true
-}
-
-task dist(dependsOn: classes, type: Jar) {
-    from files(sourceSets.main.output.classesDirs)
-    from files(sourceSets.main.output.resourcesDir)
-    from files(project.assetsDir)
+jar {
     from { configurations.compile.collect { zipTree(it) } }
+    from files(project.assetsDir)
 
     manifest {
         attributes 'Main-Class': project.mainClassName
